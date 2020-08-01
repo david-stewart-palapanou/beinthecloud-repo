@@ -1,11 +1,11 @@
 #Export the encrypted private key from PFX file
-.\openssl pkcs12 -in difchealth.pfx -nocerts -out key.pem
+.\openssl pkcs12 -in cert.pfx -nocerts -out key.key
 
 #Remove encryption from private key using the password with OpenSSL
-./openssl rsa -in key.pem -out key2.pem
+./openssl rsa -in key.key -out key2.key
 
 #Create an SSL secret using the private key and CRT file
-kubectl create secret tls aks-difc-health-ingress-tls \
-    --namespace difc-health \
-    --key ./difc-healthscheme_com.key \
-    --cert ./difc-healthscheme_com.crt
+kubectl create secret tls aks-org-ingress-tls \
+    --namespace my-namespace \
+    --key ./key2.key \
+    --cert ./cert.crt
